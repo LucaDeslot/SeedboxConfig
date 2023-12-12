@@ -28,9 +28,9 @@ services:
       - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "/home/media/rtorrent:/data"
-      - "/home/media/data:/downloads"
-      - "/home/media/rtorrent/passwd:/passwd"
+      - "/home/seedbox/rtorrent:/data"
+      - "/home/seedbox/data:/downloads"
+      - "/home/seedbox/rtorrent/passwd:/passwd"
     ulimits:
       nproc: 65535
       nofile:

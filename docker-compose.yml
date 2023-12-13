@@ -3,6 +3,8 @@ services:
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
+    networks:
+      - seedbox
     environment:
       - PUID="${PUID}"
       - PGID="${PGID}"
@@ -70,6 +72,17 @@ services:
       nofile:
         soft: 32000
         hard: 40000
+    restart: always
+
+  rtorrent-logs:
+    image: bash
+    container_name: rtorrent-rutorrent-logs
+    command: bash -c 'tail -f /log/*.log'
+    network_mode: none
+    depends_on:
+      - rtorrent-rutorrent
+    volumes:
+      - "/home/seedbox/configs/rtorrent/log:/log"
     restart: always
 
 networks:

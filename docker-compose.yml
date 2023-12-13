@@ -1,5 +1,25 @@
 version: '3.8'
 services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    networks:
+      - seedbox
+    ports:
+      - target: "${JACKETT_PORT}"
+        published: "${JACKETT_PORT}"
+        protocol: tcp
+    env_file:
+      - ".env"
+    environment:
+    - PUID="${PUID}"
+    - PGID="${PGID}"
+    - TZ=Etc/UTC
+    - AUTO_UPDATE=true #optional
+    - RUN_OPTS= #optional
+    volumes:
+      - "/home/seedbox/data/jackett:/config"
+    restart: unless-stopped
   rtorrent-rutorrent:
     image: crazymax/rtorrent-rutorrent:latest
     container_name: rtorrent-rutorrent
@@ -39,6 +59,6 @@ services:
     restart: always
 
 networks:
-  rtorrent-rutorrent:
-    name: rtorrent-rutorrent
+  seedbox:
+    name: seedbox
     

@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
+      - TZ=Etc/UTC
+    volumes:
+      - /home/seedbox/configs/radarr:/config
+      - /home/seedbox/medias/movies:/movies #optional
+      - /home/seedbox/downloads:/downloads #optional
+    ports:
+      - 7878:7878
+    restart: unless-stopped
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
@@ -18,13 +32,13 @@ services:
     - AUTO_UPDATE=true #optional
     - RUN_OPTS= #optional
     volumes:
-      - "/home/seedbox/data/jackett:/config"
+      - /home/seedbox/configs/jackett:/config
     restart: unless-stopped
   rtorrent-rutorrent:
     image: crazymax/rtorrent-rutorrent:latest
     container_name: rtorrent-rutorrent
     networks:
-      - rtorrent-rutorrent
+      - seedbox
     expose:
       - "${RT_DHT_PORT}/udp"
       - "${XMLRPC_PORT}"
@@ -48,9 +62,9 @@ services:
       - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "/home/seedbox/rtorrent:/data"
-      - "/home/seedbox/data:/downloads"
-      - "/home/seedbox/rtorrent/passwd:/passwd"
+      - "/home/seedbox/configs/rtorrent:/data"
+      - "/home/seedbox/downloads:/downloads"
+      - "/home/seedbox/configs/rtorrent/passwd:/passwd"
     ulimits:
       nproc: 65535
       nofile:

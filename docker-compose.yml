@@ -9,6 +9,8 @@ services:
       - PUID="${PUID}"
       - PGID="${PGID}"
       - TZ=Etc/UTC
+    env_file:
+      - fileName: ".env"
     volumes:
       - /home/seedbox/apps/radarr/config:/config
       - /home/seedbox/medias/movies:/movies #optional
@@ -16,25 +18,19 @@ services:
     ports:
       - 7878:7878
     restart: unless-stopped
-  jackett:
-    image: lscr.io/linuxserver/jackett:latest
-    container_name: jackett
-    networks:
-      - seedbox
-    ports:
-      - target: "${JACKETT_PORT}"
-        published: "${JACKETT_PORT}"
-        protocol: tcp
-    env_file:
-      - ".env"
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
     environment:
-    - PUID="${PUID}"
-    - PGID="${PGID}"
-    - TZ=Etc/UTC
-    - AUTO_UPDATE=true #optional
-    - RUN_OPTS= #optional
+      - PUID=$"{PUID}"
+      - PGID=$"{PGID}"
+      - TZ=Etc/UTC
+    env_file:
+      - fileName: ".env"
     volumes:
-      - /home/seedbox/apps/jackett/:/config
+      - /home/seedbox/apps/prowlarr/config:/config
+    ports:
+      - 9696:9696
     restart: unless-stopped
   rtorrent-rutorrent:
     image: crazymax/rtorrent-rutorrent:latest

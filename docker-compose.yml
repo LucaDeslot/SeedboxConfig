@@ -10,7 +10,7 @@ services:
       - PGID="${PGID}"
       - TZ=Etc/UTC
     volumes:
-      - /home/seedbox/configs/radarr:/config
+      - /home/seedbox/apps/radarr/config:/config
       - /home/seedbox/medias/movies:/movies #optional
       - /home/seedbox/downloads:/downloads #optional
     ports:
@@ -34,7 +34,7 @@ services:
     - AUTO_UPDATE=true #optional
     - RUN_OPTS= #optional
     volumes:
-      - /home/seedbox/configs/jackett:/config
+      - /home/seedbox/apps/jackett/:/config
     restart: unless-stopped
   rtorrent-rutorrent:
     image: crazymax/rtorrent-rutorrent:latest
@@ -64,9 +64,9 @@ services:
       - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "/home/seedbox/rtorrent-rutorrent/data:/data"
-      - "/home/seedbox/rtorrent-rutorrent/downloads:/downloads"
-      - "/home/seedbox/rtorrent-rutorrent/passwd:/passwd"
+      - "/home/seedbox/apps/rtorrent-rutorrent/data:/data"
+      - "/home/seedbox/downloads:/downloads"
+      - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
     ulimits:
       nproc: 65535
       nofile:
@@ -82,7 +82,7 @@ services:
     depends_on:
       - rtorrent-rutorrent
     volumes:
-      - "/home/seedbox/configs/rtorrent/log:/log"
+      - "/home/seedbox/apps/rtorrent-rutorrent/data/log:/log"
     restart: always
 
 networks:

@@ -80,7 +80,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
-      - /home/seedbox/medias:/medias
+      - /home/seedbox:/data
     ports:
       - 8989:8989
     restart: unless-stopped

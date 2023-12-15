@@ -80,9 +80,25 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
+      - /home/seedbox/medias:/medias
     ports:
       - 8989:8989
     restart: unless-stopped
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
+      - TZ=Etc/UTC
+      - VERSION=docker
+    volumes:
+      - /home/seedbox/apps/plex/config:/config
+      - /home/seedbox/medias/:/tv
+      - /path/to/movies:/movies
+    restart: unless-stopped
+
 
   rtorrent-logs:
     image: bash

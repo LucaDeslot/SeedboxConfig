@@ -13,8 +13,6 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/radarr/config:/config
-      - /home/seedbox/medias/movies:/movies #optional
-      - /home/seedbox/downloads:/downloads #optional
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -71,6 +69,18 @@ services:
         soft: 32000
         hard: 40000
     restart: always
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
+      - TZ=Etc/UTC
+    volumes:
+      - /home/seedbox/apps/sonarr/config:/config
+    ports:
+      - 8989:8989
+    restart: unless-stopped
 
   rtorrent-logs:
     image: bash

@@ -10,7 +10,7 @@ services:
       - PGID="${PGID}"
       - TZ=Etc/UTC
     env_file:
-      - fileName: ".env"
+      - ".env"
     volumes:
       - /home/seedbox/apps/radarr/config:/config
       - /home/seedbox/medias/movies:/movies #optional
@@ -21,12 +21,14 @@ services:
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
+    networks:
+      - seedbox
     environment:
-      - PUID=$"{PUID}"
-      - PGID=$"{PGID}"
+      - PUID="${PUID}"
+      - PGID="${PGID}"
       - TZ=Etc/UTC
     env_file:
-      - fileName: ".env"
+      - ".env"
     volumes:
       - /home/seedbox/apps/prowlarr/config:/config
     ports:

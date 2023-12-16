@@ -39,6 +39,9 @@ services:
     container_name: rtorrent-rutorrent
     networks:
       - seedbox
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
     expose:
       - "${RT_DHT_PORT}/udp"
       - "${XMLRPC_PORT}"

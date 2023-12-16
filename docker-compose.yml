@@ -79,6 +79,8 @@ services:
       - PUID="${PUID}"
       - PGID="${PGID}"
       - TZ=Etc/UTC
+    env_file:
+      - ".env"
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
       - /home/seedbox/data:/data

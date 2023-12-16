@@ -1,22 +1,29 @@
-name: rtorrent-rutorrent
-
+version: '3.8'
 services:
-  geoip-updater:
-    image: crazymax/geoip-updater:latest
-    container_name: geoip-updater
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
     networks:
-      - rtorrent-rutorrent
-    volumes:
-      - "./data/geoip:/data"
+      - seedbox
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
+      - TZ=Etc/UTC
     env_file:
-      - "./geoip-updater.env"
-    restart: always
-
+      - ".env"
+    volumes:
+      - /home/seedbox/apps/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
   rtorrent-rutorrent:
     image: crazymax/rtorrent-rutorrent:latest
     container_name: rtorrent-rutorrent
     networks:
-      - rtorrent-rutorrent
+      - seedbox
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
     expose:
       - "${RT_DHT_PORT}/udp"
       - "${XMLRPC_PORT}"
@@ -40,15 +47,16 @@ services:
       - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "./data:/data"
-      - "./downloads:/downloads"
-      - "./passwd:/passwd"
+      - "/home/seedbox/apps/rtorrent-rutorrent/data:/data"
+      - "/home/seedbox/data/downloads:/downloads"
+      - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
     ulimits:
       nproc: 65535
       nofile:
         soft: 32000
         hard: 40000
     restart: always
+
 
   rtorrent-logs:
     image: bash
@@ -58,9 +66,10 @@ services:
     depends_on:
       - rtorrent-rutorrent
     volumes:
-      - "./data/rtorrent/log:/log"
+      - "/home/seedbox/apps/rtorrent-rutorrent/data/log:/log"
     restart: always
 
 networks:
-  rtorrent-rutorrent:
-    name: rtorrent-rutorrent
+  seedbox:
+    name: seedbox
+    

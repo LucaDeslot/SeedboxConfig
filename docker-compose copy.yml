@@ -16,46 +16,24 @@ services:
     ports:
       - 9696:9696
     restart: unless-stopped
-  rtorrent-rutorrent:
-    image: crazymax/rtorrent-rutorrent:latest
-    container_name: rtorrent-rutorrent
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
     networks:
       - seedbox
     environment:
       - PUID="${PUID}"
       - PGID="${PGID}"
-    expose:
-      - "${RT_DHT_PORT}/udp"
-      - "${XMLRPC_PORT}"
-      - "${RUTORRENT_PORT}"
-      - "${WEBDAV_PORT}"
-      - "${RT_INC_PORT}"
-    ports:
-      - target: ${RT_DHT_PORT}
-        published: ${RT_DHT_PORT}
-        protocol: udp
-      - target: ${RUTORRENT_PORT}
-        published: ${RUTORRENT_PORT}
-        protocol: tcp
-      - target: ${WEBDAV_PORT}
-        published: ${WEBDAV_PORT}
-        protocol: tcp
-      - target: ${RT_INC_PORT}
-        published: ${RT_INC_PORT}
-        protocol: tcp
+      - TZ=Etc/UTC
     env_file:
-      - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "/home/seedbox/apps/rtorrent-rutorrent/data:/data"
-      - "/home/seedbox/data/downloads:/downloads"
-      - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 32000
-        hard: 40000
-    restart: always
+      - /home/seedbox/apps/sonarr/config:/config
+      - /home/seedbox/data/media/tv:/media
+      - /home/seedbox/data/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
 
 
   rtorrent-logs:

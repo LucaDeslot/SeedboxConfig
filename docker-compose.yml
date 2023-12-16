@@ -13,6 +13,7 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/radarr/config:/config
+      - /home/seedbox/data:/data
       # - /home/seedbox/data/media/movies:/movies
       # - /home/seedbox/data/downloads:/downloads
     ports:
@@ -65,7 +66,7 @@ services:
       - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "/home/seedbox/apps/rtorrent-rutorrent/data:/data"
+      - "/home/seedbox/apps/rtorrent-rutorrent/config:/data"
       - "/home/seedbox/data/downloads:/downloads"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
     ulimits:
@@ -87,6 +88,7 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
+      - /home/seedbox/data:/data
       # - /home/seedbox/data/media/tv:/tv
       # - /home/seedbox/data/downloads:/downloads
     ports:

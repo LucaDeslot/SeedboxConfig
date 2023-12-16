@@ -13,8 +13,8 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/radarr/config:/config
-      - /home/seedbox/data/media/movies:/movies
-      - /home/seedbox/data/downloads:/downloads
+      # - /home/seedbox/data/media/movies:/movies
+      # - /home/seedbox/data/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -87,8 +87,8 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
-      - /home/seedbox/data/media/tv:/tv
-      - /home/seedbox/data/downloads:/downloads
+      # - /home/seedbox/data/media/tv:/tv
+      # - /home/seedbox/data/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped

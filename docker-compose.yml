@@ -13,6 +13,7 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/radarr/config:/config
+      - /home/seedbox/data:/data
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -61,7 +62,7 @@ services:
       - ".env"
     volumes:
       - "/home/seedbox/apps/rtorrent-rutorrent/data:/data"
-      - "/home/seedbox/downloads:/downloads"
+      - "/home/seedbox/data/downloads:/data/downloads"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
     ulimits:
       nproc: 65535
@@ -80,7 +81,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
-      - /home/seedbox:/data
+      - /home/seedbox/data:/data
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -95,8 +96,7 @@ services:
       - VERSION=docker
     volumes:
       - /home/seedbox/apps/plex/config:/config
-      - /home/seedbox/medias/:/tv
-      - /path/to/movies:/movies
+      - /home/seedbox/data/media:/data/media
     restart: unless-stopped
 
 

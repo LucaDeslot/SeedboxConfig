@@ -6,8 +6,8 @@ services:
     networks:
       - seedbox
     environment:
-      - PUID="${PUID}"
-      - PGID="${PGID}"
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=Etc/UTC
     env_file:
       - ".env"
@@ -22,8 +22,8 @@ services:
     networks:
       - seedbox
     environment:
-      - PUID="${PUID}"
-      - PGID="${PGID}"
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=Etc/UTC
     env_file:
       - ".env"
@@ -34,18 +34,6 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
-
-
-  rtorrent-logs:
-    image: bash
-    container_name: rtorrent-rutorrent-logs
-    command: bash -c 'tail -f /log/*.log'
-    network_mode: none
-    depends_on:
-      - rtorrent-rutorrent
-    volumes:
-      - "/home/seedbox/apps/rtorrent-rutorrent/data/log:/log"
-    restart: always
 
 networks:
   seedbox:

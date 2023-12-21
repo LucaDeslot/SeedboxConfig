@@ -67,7 +67,7 @@ services:
       - ".env"
     volumes:
       - "/home/seedbox/apps/rtorrent-rutorrent/config:/data"
-      - "/home/seedbox/data/downloads:/downloads"
+      - "/home/seedbox/data:/downloads"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
     ulimits:
       nproc: 65535

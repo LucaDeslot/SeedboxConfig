@@ -17,7 +17,7 @@ services:
       - 9696:9696
     restart: unless-stopped
   rtorrent-rutorrent:
-    image: crazymax/rtorrent-rutorrent:latest
+    image: k44sh/rutorrent:latest
     container_name: rtorrent-rutorrent
     networks:
       - seedbox
@@ -48,7 +48,7 @@ services:
       - ".env"
     volumes:
       - "/home/seedbox/apps/rtorrent-rutorrent/config:/config"
-      - "/home/seedbox/data/downloads:/downloads"
+      - "/home/seedbox/data/torrents:/data/torrents"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
 
     ulimits:

@@ -76,6 +76,25 @@ services:
     ports:
       - 8989:8989
     restart: unless-stopped
+  radarr: 
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    networks:
+      - seedbox
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+    env_file:
+      - ".env"
+    volumes:
+      - /home/seedbox/apps/radarr/config:/config
+      - /home/seedbox/data:/data
+      # - /home/seedbox/data/media/movies:/movies
+      # - /home/seedbox/data/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
 
 
   rtorrent-logs:

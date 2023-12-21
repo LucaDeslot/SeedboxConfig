@@ -105,12 +105,17 @@ services:
       - PGID=${PGID}
       - VERSION=docker
       - TZ=Etc/UTC
+    env_file:
+      - ".env"
     volumes:
       - /home/seedbox/apps/plex/config:/config
       - /home/seedbox/data/media:/data/media
       # - /home/seedbox/data/media/movies:/movies
       # - /home/seedbox/data/media/tv:/tv
       # - /home/seedbox/data/downloads:/downloads
+    ports:
+      - 32400:32400
+      - 32400:32400/udp
 
 
   rtorrent-logs:

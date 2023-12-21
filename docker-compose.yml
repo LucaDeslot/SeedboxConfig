@@ -17,13 +17,14 @@ services:
       - 9696:9696
     restart: unless-stopped
   rtorrent-rutorrent:
-    image: crazymax/rtorrent-rutorrent:latest
+    image: mrbucket101/rtorrent-rutorrent:latest
     container_name: rtorrent-rutorrent
     networks:
       - seedbox
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
+      - RU_DOWNLOAD_DIR="/data/downloads"
     expose:
       - "${RT_DHT_PORT}/udp"
       - "${XMLRPC_PORT}"
@@ -50,12 +51,6 @@ services:
       - "/home/seedbox/apps/rtorrent-rutorrent/config:/config"
       - "/home/seedbox/data/downloads:/data/downloads"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
-      - type: bind
-        source: /home/seedbox/data/downloads
-        target: /downloads/temp
-      - type: bind
-        source: /home/seedbox/data/downloads
-        target: /downloads/complete
 
     ulimits:
       nproc: 65535

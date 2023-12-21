@@ -1,24 +1,5 @@
 version: '3.8'
 services:
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    networks:
-      - seedbox
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=Etc/UTC
-    env_file:
-      - ".env"
-    volumes:
-      - /home/seedbox/apps/radarr/config:/config
-      - /home/seedbox/data:/data
-      # - /home/seedbox/data/media/movies:/movies
-      # - /home/seedbox/data/downloads:/downloads
-    ports:
-      - 7878:7878
-    restart: unless-stopped
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: prowlarr
@@ -66,7 +47,7 @@ services:
       - "rtorrent-rutorrent.env"
       - ".env"
     volumes:
-      - "/home/seedbox/apps/rtorrent-rutorrent/config:/data"
+      - "/home/seedbox/apps/rtorrent-rutorrent/config:/config"
       - "/home/seedbox/data/downloads:/data/downloads"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
     ulimits:
@@ -93,22 +74,6 @@ services:
       # - /home/seedbox/data/downloads:/downloads
     ports:
       - 8989:8989
-    restart: unless-stopped
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    network_mode: host
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=Etc/UTC
-      - VERSION=docker
-    env_file:
-      - ".env"
-    volumes:
-      - /home/seedbox/apps/plex/config:/config
-      - /home/seedbox/data/media/tv:/tv
-      - /home/seedbox/data/media/movies:/movies
     restart: unless-stopped
 
 

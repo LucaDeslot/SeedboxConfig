@@ -49,9 +49,14 @@ services:
     volumes:
       - "/home/seedbox/apps/rtorrent-rutorrent/config:/config"
       - "/home/seedbox/data/downloads:/data/downloads"
-      - "/home/seedbox/data/downloads:/downloads/temp" # Montage pour les téléchargements temporaires
-      - "/home/seedbox/data/downloads:/downloads/complete" # Montage pour les téléchargements complets
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
+      - type: bind
+        source: /home/seedbox/data/downloads
+        target: /downloads/temp
+      - type: bind
+        source: /home/seedbox/data/downloads
+        target: /downloads/complete
+
     ulimits:
       nproc: 65535
       nofile:

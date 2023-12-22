@@ -105,6 +105,7 @@ services:
       - PGID=${PGID}
       - VERSION=docker
       - TZ=Etc/UTC
+      - PLEX_CLAIM=claim--_PynKxDKtzWGZPtefEq
     env_file:
       - ".env"
     volumes:

@@ -71,8 +71,6 @@ services:
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
       - /home/seedbox/data:/data
-      # - /home/seedbox/data/media/tv:/tv
-      # - /home/seedbox/data/downloads:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -90,8 +88,6 @@ services:
     volumes:
       - /home/seedbox/apps/radarr/config:/config
       - /home/seedbox/data:/data
-      # - /home/seedbox/data/media/movies:/movies
-      # - /home/seedbox/data/downloads:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -111,12 +107,25 @@ services:
     volumes:
       - /home/seedbox/apps/plex/config:/config
       - /home/seedbox/data/media:/data/media
-      # - /home/seedbox/data/media/movies:/movies
-      # - /home/seedbox/data/media/tv:/tv
-      # - /home/seedbox/data/downloads:/downloads
     ports:
       - 32400:32400
       - 32400:32400/udp
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    networks:
+      - seedbox
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=Etc/UTC
+    env_file:
+      - ".env"
+    volumes:
+      - /home/seedbox/apps/overseerr/config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped
 
 
   rtorrent-logs:

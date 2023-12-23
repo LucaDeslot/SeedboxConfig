@@ -15,6 +15,9 @@ services:
       - /home/seedbox/apps/prowlarr/config:/config
     ports:
       - 9696:9696
+    labels:
+      - "traefik.http.routers.rutorrent.rule=Host(`deslotflix.fr`) && PathPrefix(`/prowlarr`)"
+      - "traefik.http.services.rutorrent.loadbalancer.server.port=8080"
     restart: unless-stopped
   rtorrent-rutorrent:
     image: k44sh/rutorrent:latest
@@ -50,7 +53,9 @@ services:
       - "/home/seedbox/apps/rtorrent-rutorrent/config:/config"
       - "/home/seedbox/data/torrents:/data/torrents"
       - "/home/seedbox/apps/rtorrent-rutorrent/passwd:/passwd"
-
+    labels:
+      - "traefik.http.routers.rutorrent.rule=Host(`deslotflix.fr`) && PathPrefix(`/rutorrent`)"
+      - "traefik.http.services.rutorrent.loadbalancer.server.port=8080"
     ulimits:
       nproc: 65535
       nofile:
@@ -73,6 +78,9 @@ services:
       - /home/seedbox/data:/data
     ports:
       - 8989:8989
+    labels:
+      - "traefik.http.routers.rutorrent.rule=Host(`deslotflix.fr`) && PathPrefix(`/sonarr`)"
+      - "traefik.http.services.rutorrent.loadbalancer.server.port=8080"
     restart: unless-stopped
   radarr: 
     image: lscr.io/linuxserver/radarr:latest
@@ -90,6 +98,9 @@ services:
       - /home/seedbox/data:/data
     ports:
       - 7878:7878
+    labels:
+      - "traefik.http.routers.rutorrent.rule=Host(`deslotflix.fr`) && PathPrefix(`/radarr`)"
+      - "traefik.http.services.rutorrent.loadbalancer.server.port=8080"
     restart: unless-stopped
   plex:
     image: lscr.io/linuxserver/plex:latest
@@ -125,6 +136,9 @@ services:
       - /home/seedbox/apps/overseerr/config:/config
     ports:
       - 5055:5055
+    labels:
+      - "traefik.http.routers.rutorrent.rule=Host(`deslotflix.fr`) && PathPrefix(`/overseerr`)"
+      - "traefik.http.services.rutorrent.loadbalancer.server.port=8080"
     restart: unless-stopped
   reverse-proxy:
     # The official v2 Traefik docker image
@@ -135,7 +149,7 @@ services:
       # The HTTP port
       - "80:80"
       # The Web UI (enabled by --api.insecure=true)
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock

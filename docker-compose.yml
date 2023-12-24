@@ -141,7 +141,7 @@ services:
     - "traefik.http.routers.api.service=api@internal"
     - "traefik.http.routers.api.entrypoints=http"
     - "traefik.http.routers.api.middlewares=auth"
-    - "traefik.http.middlewares.auth.basicauth.users=strauss:$$apr1$$0kOSyQD4$aV7tXie7Ts8KSd50aD67m0"
+    - "traefik.http.middlewares.auth.basicauth.users=strauss:$$apr1$$0kOSyQD4$$aV7tXie7Ts8KSd50aD67m0"
 
 
 

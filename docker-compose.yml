@@ -139,12 +139,10 @@ services:
     labels:
     - "traefik.http.routers.api.rule=Host(`traefik.deslotflix.fr`)"
     - "traefik.http.routers.api.service=api@internal"
-    - "traefik.http.routers.api.entrypoints=http"
+    - "traefik.http.routers.api.entrypoints=https"
     - "traefik.http.routers.api.middlewares=auth"
     - "traefik.http.middlewares.auth.basicauth.users=strauss:$$apr1$$0kOSyQD4$$aV7tXie7Ts8KSd50aD67m0"
-
-
-
+    - "traefik.http.routers.api.tls=true"
 
   rtorrent-logs:
     image: bash

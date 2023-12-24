@@ -136,6 +136,12 @@ services:
       # So that Traefik can listen to the Docker events
       - /srv/traefik.toml:/etc/traefik/traefik.toml
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+    - "traefik.http.routers.api.rule=Host(`traefik.home.wilson.net`)"
+    - "traefik.http.routers.api.service=api@internal"
+    - "traefik.http.routers.api.entrypoints=http"
+    - "traefik.http.routers.api.middlewares=auth"
+    - "traefik.http.middlewares.auth.basicauth.users=strauss:$$apr1$$0kOSyQD4$aV7tXie7Ts8KSd50aD67m0"
 
 
 

@@ -79,7 +79,6 @@ services:
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.sonarr.tls=true"
       - "traefik.docker.network=seedbox"
-#      - "traefik.http.routers.sonarr.middlewares=sonarr-stripprefix@file"
   radarr: 
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -94,9 +93,12 @@ services:
     volumes:
       - /home/seedbox/apps/radarr/config:/config
       - /home/seedbox/data:/data
-    ports:
-      - 7878:7878
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`radarr.deslotflix.fr`)"
+      - "traefik.http.routers.sonarr.tls=true"
+      - "traefik.docker.network=seedbox"
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex

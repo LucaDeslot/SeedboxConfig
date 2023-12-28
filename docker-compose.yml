@@ -61,6 +61,8 @@ services:
     container_name: sonarr
     networks:
       - seedbox
+    ports:
+      - 8989:8989
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -70,9 +72,14 @@ services:
     volumes:
       - /home/seedbox/apps/sonarr/config:/config
       - /home/seedbox/data:/data
-    ports:
-      - 8989:8989
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sonarr.rule=Host(`sonarr.deslotflix.fr`)"
+      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
+      - "traefik.http.routers.sonarr.tls=true"
+      - "traefik.docker.network=seedbox"
+#      - "traefik.http.routers.sonarr.middlewares=sonarr-stripprefix@file"
   radarr: 
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -125,24 +132,6 @@ services:
     ports:
       - 5055:5055
     restart: unless-stopped
-  reverse-proxy:
-    # The official v2 Traefik docker image
-    image: traefik:v2.10
-    ports:
-      # The HTTP port
-      - "80:80"
-      - "443:443"
-    volumes:
-      # So that Traefik can listen to the Docker events
-      - /srv/traefik.toml:/etc/traefik/traefik.toml
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-    - "traefik.http.routers.api.rule=Host(`traefik.deslotflix.fr`)"
-    - "traefik.http.routers.api.service=api@internal"
-    - "traefik.http.routers.api.entrypoints=https"
-    - "traefik.http.routers.api.middlewares=auth"
-    - "traefik.http.middlewares.auth.basicauth.users=strauss:$$apr1$$0kOSyQD4$$aV7tXie7Ts8KSd50aD67m0"
-    - "traefik.http.routers.api.tls=true"
 
   rtorrent-logs:
     image: bash

@@ -13,9 +13,12 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/prowlarr/config:/config
-    ports:
-      - 9696:9696
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prowlarr.rule=Host(`prowlarr.deslotflix.fr`)"
+      - "traefik.http.routers.prowlarr.tls=true"
+      - "traefik.docker.network=seedbox"
   rtorrent-rutorrent:
     image: k44sh/rutorrent:latest
     container_name: rtorrent-rutorrent
@@ -61,8 +64,6 @@ services:
     container_name: sonarr
     networks:
       - seedbox
-    ports:
-      - 8989:8989
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -76,7 +77,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.deslotflix.fr`)"
-      - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.sonarr.tls=true"
       - "traefik.docker.network=seedbox"
   radarr: 
@@ -131,9 +131,12 @@ services:
       - ".env"
     volumes:
       - /home/seedbox/apps/overseerr/config:/config
-    ports:
-      - 5055:5055
     restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.overseerr.rule=Host(`overseerr.deslotflix.fr`)"
+      - "traefik.http.routers.overseerr.tls=true"
+      - "traefik.docker.network=seedbox"
 
   rtorrent-logs:
     image: bash

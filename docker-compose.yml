@@ -120,6 +120,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.plex.rule=Host(`plex.deslotflix.fr`)"
+      - "traefik.http.services.plex.loadbalancer.server.port=32400"
       - "traefik.http.routers.plex.tls=true"
       - "traefik.docker.network=seedbox"
   overseerr:

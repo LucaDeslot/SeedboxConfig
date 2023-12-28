@@ -30,7 +30,6 @@ services:
     expose:
       - "${RT_DHT_PORT}/udp"
       - "${XMLRPC_PORT}"
-      - "${RUTORRENT_PORT}"
       - "${WEBDAV_PORT}"
       - "${RT_INC_PORT}"
     ports:
@@ -39,9 +38,6 @@ services:
         protocol: udp
       - target: ${WEBDAV_PORT}
         published: ${WEBDAV_PORT}
-        protocol: tcp
-      - target: ${RUTORRENT_PORT}
-        published: ${RUTORRENT_PORT}
         protocol: tcp
       - target: ${RT_INC_PORT}
         published: ${RT_INC_PORT}
@@ -64,6 +60,7 @@ services:
       - "traefik.http.routers.rutorrent.rule=Host(`rutorrent.deslotflix.fr`)"
       - "traefik.http.routers.rutorrent.tls=true"
       - "traefik.docker.network=seedbox"
+      - "traefik.http.services.rutorrent.loadbalancer.server.port=8080"
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr

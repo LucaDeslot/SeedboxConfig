@@ -30,16 +30,12 @@ services:
     expose:
       - "${RT_DHT_PORT}/udp"
       - "${XMLRPC_PORT}"
-      - "${RUTORRENT_PORT}"
       - "${WEBDAV_PORT}"
       - "${RT_INC_PORT}"
     ports:
       - target: ${RT_DHT_PORT}
         published: ${RT_DHT_PORT}
         protocol: udp
-      - target: ${RUTORRENT_PORT}
-        published: ${RUTORRENT_PORT}
-        protocol: tcp
       - target: ${WEBDAV_PORT}
         published: ${WEBDAV_PORT}
         protocol: tcp
@@ -59,6 +55,11 @@ services:
         soft: 32000
         hard: 40000
     restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rutorrent.rule=Host(`rutorrent.deslotflix.fr`)"
+      - "traefik.http.routers.rutorrent.tls=true"
+      - "traefik.docker.network=seedbox"
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -115,9 +116,11 @@ services:
     volumes:
       - /home/seedbox/apps/plex/config:/config
       - /home/seedbox/data/media:/data/media
-    ports:
-      - 32400:32400
-      - 32400:32400/udp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.plex.rule=Host(`plex.deslotflix.fr`)"
+      - "traefik.http.routers.plex.tls=true"
+      - "traefik.docker.network=seedbox"
   overseerr:
     image: lscr.io/linuxserver/overseerr:latest
     container_name: overseerr

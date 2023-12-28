@@ -40,6 +40,9 @@ services:
       - target: ${WEBDAV_PORT}
         published: ${WEBDAV_PORT}
         protocol: tcp
+      - target: ${RUTORRENT_PORT}
+        published: ${RUTORRENT_PORT}
+        protocol: tcp
       - target: ${RT_INC_PORT}
         published: ${RT_INC_PORT}
         protocol: tcp

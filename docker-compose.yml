@@ -104,8 +104,7 @@ services:
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
-    networks:
-      - seedbox
+    network_mode: host
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
